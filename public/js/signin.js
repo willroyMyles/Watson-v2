@@ -34,7 +34,17 @@
                 check=false;
             }
         }
-
+        if(check == true) {
+            $.ajax({
+                type: 'POST',
+                url: '/todo',
+                data: todo,
+                success: function(data){
+                  //do something with the data via front-end framework
+                  location.reload();
+                }
+              });
+        }
         return check;
     });
 

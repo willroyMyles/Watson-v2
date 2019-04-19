@@ -1,6 +1,7 @@
 var bodyParser= require('body-parser').urlencoded({extended:false});
 var mongoose = require('mongoose'); // database manager
-
+mongoose.connect('mongodb+srv://user:password.@watson-utech-assistant-xkgae.mongodb.net/test?retryWrites=true', {useNewUrlParser: true});
+var User = require('../models/user');
 
 module.exports = (app) =>{
 
@@ -22,8 +23,14 @@ module.exports = (app) =>{
     console.log('sign in called');
     res.render('signup');
   });
-  app.post('/signup', (req,res)=>{
-    res.render('signin');
+  app.post('/signup',bodyParser, (req,res)=>{
+    
+    var user = User(req.body).save(function(err,data){
+      if(err) throw err;
+      res.json(req.body);
+    })
+
+    //res.render('signin');
   });
 
 

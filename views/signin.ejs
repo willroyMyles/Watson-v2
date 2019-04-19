@@ -100,22 +100,7 @@
 <!--===============================================================================================-->
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
-	<script src="js/main.js"></script>
-
-	<script>
-		function goToSignUp(){
-			 console.log("clicked");
-        $.ajax({
-            type: 'POST',
-            url: '/signin',
-            data: true,
-            success: function(data){
-                        //do something with the data via front-end framework
-               // location.reload();
-            }
-          });
-		}
-	</script>
+	<script src="js/signin.js"></script>
 
 </body>
 </html>
