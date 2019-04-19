@@ -7,9 +7,9 @@ var watson = require('./watsonController');
 module.exports = (app) =>{
 
     watson(app);
-   setTimeout(() => {
-       watson.sendMessage('hi');
-   }, 2000);
+//    setTimeout(() => {
+//        watson.sendMessage('hi');
+//    }, 2000);
     
 
 
@@ -26,8 +26,14 @@ module.exports = (app) =>{
         res.render('chat1');
     });
 
-    app.post('/chat', bodyParser, function(req,res){
-        console.log(req.body.item);
+    app.post('/chat', bodyParser, async function(req,res){
+        async function sen(item){
+            console.log(item);
+            res.send(item);
+        }
+       
+        await watson.sendMessage(req.body.item, sen);
+        //await new Promise((resolve, reject) => setTimeout(resolve, 3000));
     });
 
 }
