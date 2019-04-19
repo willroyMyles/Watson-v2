@@ -1,37 +1,40 @@
-$(document).ready(function(){
+var bodyParser= require('body-parser').urlencoded({extended:false});
+var mongoose = require('mongoose'); // database manager
 
-    $('form').on('submit', function(){
-  
-        var item = $('form input');
-        var todo = {item: item.val()};
-  
-        $.ajax({
-          type: 'POST',
-          url: '/todo',
-          data: todo,
-          success: function(data){
-            //do something with the data via front-end framework
-            location.reload();
-          }
-        });
-  
-        return false;
-  
+
+module.exports = (app) =>{
+
+    //set login route
+    app.get('/index', (req, res) =>{
+        res.render('signin');
     });
-  
-    $('li').on('click', function(){
-      console.log("item");
-  
-        var item = $(this).text().replace(/ /g, '-');
-        $.ajax({
-          type: 'DELETE',
-          url: '/todo/' + item,
-          success: function(data){
-            //do something with the data via front-end framework
-            console.log('delete returned');
-            location.reload();
-          }
-        });
+    app.get('/', (req, res) =>{
+        res.render('signin');
     });
-  
+    app.get('/signin', (req, res) =>{
+      res.render('signin');
   });
+  app.get('/signup', (req, res) =>{
+    res.render('signup');
+  });
+
+  app.post('/signin', (req,res)=>{
+    console.log('sign in called');
+    res.render('signup');
+  });
+  app.post('/signup', (req,res)=>{
+    res.render('signin');
+  });
+
+
+
+    app.post('/chat', bodyParser, async function(req,res){
+        async function sen(item){
+            console.log(item);
+            res.send(item);
+        }
+       
+        await watson.sendMessage(req.body.item, sen);
+    });
+
+}
