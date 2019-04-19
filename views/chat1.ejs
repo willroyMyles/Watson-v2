@@ -85,13 +85,33 @@ function newMessage() {
 	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 };
 
+function sendToController(){
+	message = $(".message-input input").val();
+	if($.trim(message) == '') {
+		return false;
+	}
+	item = {item: message};
+      $.ajax({
+        type: 'POST',
+        url: '/chat',
+        data: item,
+        success: function(data){
+          //do something with the data via front-end framework
+          //location.reload();
+        }
+      });
+}
+
 $('.submit').click(function() {
-  newMessage();
+		sendToController();
+	newMessage();
+	//  send to controller
 });
 
 $(window).on('keydown', function(e) {
   if (e.which == 13) {
-    newMessage();
+		sendToController();
+		newMessage();
     return false;
   }
 });
