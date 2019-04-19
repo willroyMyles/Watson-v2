@@ -33,7 +33,6 @@ module.exports = (app) =>{
         }
        
         await watson.sendMessage(req.body.item, sen);
-        //await new Promise((resolve, reject) => setTimeout(resolve, 3000));
     });
 
 }

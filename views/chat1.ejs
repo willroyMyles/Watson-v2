@@ -27,7 +27,7 @@
 		</div>
 		<div class="messages">
 			<ul>
-				<li class="sent">
+				<%# <li class="sent">
 					<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
 					<p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
 				</li>
@@ -58,7 +58,7 @@
 				<li class="replies">
 					<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
 					<p>Wrong. You take the gun, or you pull out a bigger one. Or, you call their bluff. Or, you do any one of a hundred and forty six other things.</p>
-				</li>
+				</li> %>
 			</ul>
 		</div>
         <div class="message-input">
@@ -81,15 +81,46 @@ function newMessage() {
 	}
 	$('<li class="sent"><img src="@routes.Assets.versioned("images/male.png")" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
 	$('.message-input input').val(null);
-	$('.contact.active .preview').html('<span>You: </span>' + message);
+	//$('.contact.active .preview').html('<span>You: </span>' + message);
 	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 };
 
 function writeMessage(msg){
 	$('<li class="replies"><img src=/images/watson.png")" alt="" /><p>' + msg + '</p></li>').appendTo($('.messages ul'));
-	$('.message-input input').val(null);
-	$('.contact.active .preview').html('<span>You: </span>' + msg);
+//	$('.contact.active .preview').html('<span>You: </span>' + msg);
 	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+}
+
+function writeOption(element){
+//	$('.message-input input').val(null);
+//	$('.contact.active .preview').html('<span>You: </span>' + msg);
+
+element.option.forEach(option =>{
+		var buttonLabel = option.label;
+		var buttonValue = option.value.input.text;
+$('<li class="replies"><img src=/images/watson.png")" alt="" /><p>' + element.title + '<br><button class="option-button" onclick="" href="#">'+  buttonLabel +'</button> </p></li>').appendTo($('.messages ul'));
+		$(".option-button").click(function(){
+				sendMsgToController(buttonValue);
+		});
+});
+	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+}
+
+function sendMsgToController(msg){
+	console.log(msg);
+	item = {item: msg};
+      $.ajax({
+        type: 'POST',
+        url: '/chat',
+        data: item,
+        success: function(data){
+					//do something with the data via front-end framework
+					data.forEach(element => {
+						if(element.response_type === 'text') writeMessage(element.text);
+						if(element.response_type === 'option') writeOption(element);
+					});
+        }
+      });
 }
 
 function sendToController(){
@@ -105,9 +136,10 @@ function sendToController(){
         data: item,
         success: function(data){
 					//do something with the data via front-end framework
-					
-					console.log(data);
-          writeMessage(data.response_type);
+					data.forEach(element => {
+						if(element.response_type === 'text') writeMessage(element.text);
+						if(element.response_type === 'option') writeOption(element);
+					});
         }
       });
 }
