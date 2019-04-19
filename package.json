@@ -1,0 +1,21 @@
+{
+  "name": "module-specialization-app",
+  "version": "1.0.0",
+  "description": "a chat interface to help students select their specialization ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mongoose": "^5.5.2",
+    "nodemon": "^1.18.11"
+  },
+  "devDependencies": {
+    "node-sass": "^4.11.0"
+  }
+}
