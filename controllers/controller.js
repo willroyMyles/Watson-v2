@@ -22,9 +22,7 @@ module.exports = (app) =>{
     app.get('/', (req, res) =>{
         res.render('index');
     });
-    app.get('/chat', (req, res) =>{
-        res.render('chat1');
-    });
+    
 
     app.post('/chat', bodyParser, async function(req,res){
         async function sen(item){

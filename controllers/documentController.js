@@ -18,16 +18,28 @@ module.exports = (app) =>{
   app.get('/signup', (req, res) =>{
     res.render('signup');
   });
-
-  app.post('/signin', (req,res)=>{
-    console.log('sign in called');
-    res.render('signup');
+  app.get('/chat', (req, res) =>{
+    res.render('chat1');
   });
+
+  app.post('/signin',bodyParser, async (req,res)=>{
+    await User.findOne({username: req.body.username, password: req.body.password },(err,data)=>{
+ 
+    if(data == null){
+      //res.render('signin');
+      console.log('data is null');
+    }else{
+      console.log(data);
+      res.redirect('/chat');
+    }
+    });
+  });
+
   app.post('/signup',bodyParser, (req,res)=>{
     
     var user = User(req.body).save(function(err,data){
       if(err) throw err;
-      res.json(req.body);
+      res.redirect('signin');
     })
 
     //res.render('signin');
