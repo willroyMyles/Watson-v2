@@ -46,17 +46,21 @@ const service = assistant.createSession({
             })
             .then(res => {
               //console.log(JSON.stringify(res, null, 2));
-              var myArray = new Array();
+              var didntUnderstand;
                 var arrResponse = res.output.generic;
                 arrResponse.forEach(element => {
                     switch(element.response_type)
                     {
-                        //if response type os text
+                        //if response type is text
                         case 'text':
                         var item = new ModelItem();
                             item.response_type = 'text';
                             item.text = element.text;
                             arr.push(item);
+                            if(element.text == "I didn\'t understand. You can try rephrasing."){
+                              console.log('didnt understand');
+                              didntUnderstand = msg;
+                            }
                             break;
                         case 'option':
                         var item = new ModelItem();
@@ -73,7 +77,7 @@ const service = assistant.createSession({
                     
                 });
 
-                callBack(arr);
+                callBack(arr, didntUnderstand);
             })
             .catch(err => {
               console.log(err);
