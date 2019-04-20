@@ -2,7 +2,7 @@ var bodyParser= require('body-parser').urlencoded({extended:false});
 var mongoose = require('mongoose'); // database manager
 mongoose.connect('mongodb+srv://user:password.@watson-utech-assistant-xkgae.mongodb.net/test?retryWrites=true', {useNewUrlParser: true});
 var User = require('../models/user');
-
+var watson;
 module.exports = (app) =>{
 
     //set login route
@@ -30,6 +30,8 @@ module.exports = (app) =>{
       console.log('data is null');
     }else{
       console.log(data);
+      watson = require('./watsonController');
+      watson(app);
       res.redirect('/chat');
     }
     });
