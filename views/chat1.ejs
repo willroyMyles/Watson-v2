@@ -155,7 +155,11 @@ $(window).on('keydown', function(e) {
 });
 
 $(document).ready(function(){
-	sendMsgToController('hi');
+
+	setTimeout(() => {
+			sendMsgToController('hi');
+	}, 2000);
+
 });
 //# sourceURL=pen.js
 </script>

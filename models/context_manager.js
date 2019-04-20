@@ -1,6 +1,16 @@
-exports = class{
+
+exports = class ContextManager{
+
+
     constructor(){
         this.array[{context,value}];
+    }
+
+    //proxy code
+    insertToObject({context,value}){
+
+        if(typeof value == 'number') add(context,value);
+        else insert(context,value);
     }
 
     insert(context,value){

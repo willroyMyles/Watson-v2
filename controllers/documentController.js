@@ -64,10 +64,8 @@ module.exports = (app) =>{
           if(optionalArgument!== undefined){
             user.question.push(optionalArgument);
             let result = await User.updateOne({username: user.username, password: user.password}, {question: user.question}, (err, data)=>{
-              console.log(data);
             });
           }
-            console.log(item);
             res.send(item);
         }
         await watson.sendMessage(req.body.item, sen);

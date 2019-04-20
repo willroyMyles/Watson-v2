@@ -9,6 +9,8 @@ const userName = 'apikey';
 var sessionId;
 
 const ModelItem = require('../models/item');
+const contextManager = require('../models/context_manager');
+
 
 // create assistant
 const assistant = new AssistantV2({
@@ -57,9 +59,16 @@ const service = assistant.createSession({
               }
             })
             .then(res => {
-              console.log(JSON.stringify(res, null, 2));
               var didntUnderstand;
                 var arrResponse = res.output.generic;
+                var contextProperty = res.context.skills;//["main skill"].user_defined;
+                if(contextProperty!==undefined){
+                  var contexts = contextProperty['main skill'].user_defined;
+                  console.log(contexts);
+                  //contextManger.insertToObject(contexts);
+                }
+                //console.log(JSON.stringify(contextProperty, null, 2));
+
                 arrResponse.forEach(element => {
                     switch(element.response_type)
                     {
