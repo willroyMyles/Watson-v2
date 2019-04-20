@@ -1,24 +1,23 @@
+exports.ContextManager = class ContextManager {
 
-exports = class ContextManager{
 
-
-    constructor(){
-        this.array[{context,value}];
+    constructor() {
+        this.array[{ context, value }];
     }
 
     //proxy code
-    insertToObject({context,value}){
+    insertToObject({ context, value }) {
 
-        if(typeof value == 'number') add(context,value);
-        else insert(context,value);
+        if (typeof value == 'number') this.add(context, value);
+        else this.insert(context, value);
     }
 
-    insert(context,value){
-//if its already in array, return,
-        if(this.array.find(context)!==undefined) return;
+    insert(context, value) {
+        //if its already in array, return,
+        if (this.array.find(context) !== undefined) return;
 
-        var val =0 ;
-        switch(value){
+        var val = 0;
+        switch (value) {
             case "extremely":
                 val = 5;
                 break;
@@ -37,11 +36,12 @@ exports = class ContextManager{
             default:
                 break;
         }
-        
-        add(context, val);
+
+        this.add(context, val);
     }
 
-    add(context,value){
-        this.array.push({context,value});
+    add(context, value) {
+        this.array.push({ context, value });
+        console.log("added" + array);
     }
 }
