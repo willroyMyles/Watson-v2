@@ -9,11 +9,7 @@
 	<link rel="stylesheet" media="screen" href="/assets/main.css")>
 
 </head>
-
-
 <body>
-
-
 <div id="frame">
 	<div class="content">
 		<div class="contact-profile">
@@ -156,6 +152,10 @@ $(window).on('keydown', function(e) {
 		newMessage();
     return false;
   }
+});
+
+$(document).ready(function(){
+	sendMsgToController('hi');
 });
 //# sourceURL=pen.js
 </script>

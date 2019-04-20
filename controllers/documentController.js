@@ -45,6 +45,8 @@ module.exports = (app) =>{
     });
   });
 
+ 
+
   app.post('/signup',bodyParser, (req,res)=>{
     
       User(req.body).save(function(err,data){

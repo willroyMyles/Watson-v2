@@ -1,5 +1,5 @@
 
-module.exports = function(app){
+module.exports = async function(app){
 
 const AssistantV2 = require('watson-developer-cloud/assistant/v2');
 const assistantUrl = "https://gateway-wdc.watsonplatform.net/assistant/api";
@@ -18,14 +18,16 @@ const assistant = new AssistantV2({
   url: assistantUrl
 });
 
+var setSessionId = async function(sesId){
+  sessionId = sesId;
+}
+
 //create service
 const service = assistant.createSession({
     assistant_id: assistantId
   })
-    .then(res => {
-      console.log(JSON.stringify(res, null, 2));
-      console.log(res.session_id);
-      sessionId = res.session_id;
+    .then(async res => {
+     await setSessionId(res.session_id);
     })
     .catch(err => {
       console.log(err);
@@ -34,6 +36,13 @@ const service = assistant.createSession({
 
   var sendMessage = async function (msg, callBack){
     var arr = new Array();
+
+        if(sessionId==undefined){
+          setTimeout(() => {
+            sendMessage(msg, callBack);
+            return;
+          }, 1500);
+        }
 
         assistant.message({
             assistant_id: assistantId,
