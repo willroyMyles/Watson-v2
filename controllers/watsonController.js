@@ -45,7 +45,7 @@ const service = assistant.createSession({
               }
             })
             .then(res => {
-              //console.log(JSON.stringify(res, null, 2));
+              console.log(JSON.stringify(res, null, 2));
               var didntUnderstand;
                 var arrResponse = res.output.generic;
                 arrResponse.forEach(element => {

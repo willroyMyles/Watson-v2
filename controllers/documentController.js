@@ -27,7 +27,7 @@ module.exports = (app) =>{
     await User.findOne({username: req.body.username, password: req.body.password },(err,data)=>{
  
     if(data == null){
-      //res.render('signin');
+      res.render('signin');
       console.log('data is null');
     }else{
       console.log(data);
