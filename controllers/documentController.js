@@ -2,9 +2,11 @@ var bodyParser= require('body-parser').urlencoded({extended:false});
 var mongoose = require('mongoose'); // database manager
 mongoose.connect('mongodb+srv://user:password.@watson-utech-assistant-xkgae.mongodb.net/test?retryWrites=true', {useNewUrlParser: true});
 var User = require('../models/user');
-var watson;
-var user = User();
+
 module.exports = (app) =>{
+
+  var watson;
+  var user = User();
 
     //set login route
     app.get('/index', (req, res) =>{
@@ -31,9 +33,11 @@ module.exports = (app) =>{
       console.log('data is null');
     }else{
       console.log(data);
+    
       user.username = data.username;
       user.password = data.password;
       user.question = data.question;
+      
       watson = require('./watsonController');
       watson(app);
       res.redirect('/chat');
@@ -43,7 +47,7 @@ module.exports = (app) =>{
 
   app.post('/signup',bodyParser, (req,res)=>{
     
-    user = User(req.body).save(function(err,data){
+      User(req.body).save(function(err,data){
       if(err) throw err;
       res.redirect('signin');
     })
