@@ -41,7 +41,10 @@ const service = assistant.createSession({
             
             input: {
               'message_type': 'text',
-              'text': msg
+              'text': msg,
+              options: {
+                'return_context': true
+              }
               }
             })
             .then(res => {
