@@ -32,7 +32,7 @@ const service = assistant.createSession({
     .catch(err => {
       console.log(err);
     });
-
+// TODO let assistant send message first
 
   var sendMessage = async function (msg, callBack){
     var arr = new Array();
