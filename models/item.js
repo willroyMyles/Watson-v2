@@ -1,10 +1,12 @@
-module.exports =  class{
-    constructor(){
-    var response_type;
-    var text;
-    var title
-    var option;
-    };
-
+module.exports =  class item{
     
+    constructor(){
+        this.response_text;
+        this.text;
+
+    }
+
+    setText(txt){
+        this.text = txt;
+    };
 };

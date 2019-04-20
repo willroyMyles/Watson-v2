@@ -2,6 +2,8 @@ var bodyParser= require('body-parser').urlencoded({extended:false});
 var mongoose = require('mongoose'); // database manager
 mongoose.connect('mongodb+srv://user:password.@watson-utech-assistant-xkgae.mongodb.net/test?retryWrites=true', {useNewUrlParser: true});
 var User = require('../models/user');
+var Item = require('../models/item');
+
 
 module.exports = (app) =>{
 
