@@ -88,9 +88,6 @@ function writeMessage(msg){
 }
 
 function writeOption(element){
-//	$('.message-input input').val(null);
-//	$('.contact.active .preview').html('<span>You: </span>' + msg);
-
 element.option.forEach(option =>{
 		var buttonLabel = option.label;
 		var buttonValue = option.value.input.text;
@@ -102,6 +99,55 @@ $('<li class="replies"><img src=/images/watson.png")" alt="" /><p>' + element.ti
 	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 }
 
+function bubbleSort(nameArr, valueArr){
+	var swapped;
+    do {
+        swapped = false;
+        for (var i=0; i < valueArr.length-1; i++) {
+            if (valueArr[i] < valueArr[i+1]) {
+								var temp = valueArr[i];
+								var tempWord = nameArr[i];
+
+								valueArr[i] = valueArr[i+1];
+								nameArr[i] = nameArr[i+1];
+								
+                valueArr[i+1] = temp;
+                nameArr[i+1] = tempWord;
+                swapped = true;
+            }
+        }
+		} while (swapped);
+		
+	return {nameArr, valueArr};
+}
+
+function writeResults(element){
+	$('<li class="replies"><img src=/images/watson.png")" alt="" /><p>your results are as follows: </p></br></li>').appendTo($('.messages ul'));
+	var nameArr = [];
+  var valueArr = [];
+	
+	// change object into array
+  for (var prop in element.results) {
+    if (element.results.hasOwnProperty(prop)) {
+			nameArr.push(prop);
+			valueArr.push(element.results[prop])
+    }
+	}
+
+	var item = bubbleSort(nameArr, valueArr);
+	nameArr = item.nameArr;
+	valueArr = item.valueArr;
+	
+	console.log(nameArr);
+	console.log(valueArr);
+	for (let index = 0; index < valueArr.length; index++) {
+		
+			$('<li class="replies"><img src=/images/watson.png")" alt="" /><p><button>'+ nameArr[index] +'</button>  with compatability of '+ valueArr[index]+'%</p></br></li>').appendTo($('.messages ul'));
+
+	}
+}
+
+//message sent from interactions
 function sendMsgToController(msg){
 	console.log(msg);
 	item = {item: msg};
@@ -119,6 +165,7 @@ function sendMsgToController(msg){
       });
 }
 
+//message sent from chat box
 function sendToController(){
 	message = $(".message-input input").val();
 	if($.trim(message) == '') {
@@ -135,6 +182,7 @@ function sendToController(){
 					data.forEach(element => {
 						if(element.response_type === 'text') writeMessage(element.text);
 						if(element.response_type === 'option') writeOption(element);
+						if(element.response_type === 'results') writeResults(element);
 					});
         }
       });

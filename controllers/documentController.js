@@ -67,7 +67,14 @@ module.exports = (app) => {
             }
             res.send(item);
         }
-        await watson.sendMessage(req.body.item, sen);
+
+        async function results(item) {
+            console.log(item);
+            res.send(item);
+        }
+
+
+        await watson.sendMessage(req.body.item, sen, results);
     });
 
 }

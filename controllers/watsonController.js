@@ -37,9 +37,8 @@ module.exports = async function(app) {
         .catch(err => {
             console.log(err);
         });
-    // TODO let assistant send message first
 
-    var sendMessage = async function(msg, callBack) {
+    var sendMessage = async function(msg, callBack, callback1) {
         var arr = new Array();
 
         if (sessionId == undefined) {
@@ -82,7 +81,14 @@ module.exports = async function(app) {
                                 didntUnderstand = msg;
                             }
                             if (element.text == "checking results") {
-                                cm.compareResults();
+                                var results = cm.compareResults();
+                                var item = new ModelItem();
+                                item.response_type = 'results';
+                                item.results = results;
+                                //callback1(item);
+                                arr.push(item);
+                                console.log('item pushed');
+                                //TODO display results to user and options it out
                             }
                             break;
                         case 'option':

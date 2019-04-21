@@ -3,9 +3,8 @@ var Specialization = require('./Specializations');
 class Contextmanager {
 
     constructor() {
-        this.contexts = ['test'];
+        this.contexts = [];
         this.values = [];
-        this.contexts.pop();
     }
 
     add(obbj) {
@@ -54,8 +53,6 @@ class Contextmanager {
             if (this.contexts[i] === obj1) status = true;
         }
 
-        console.log(status);
-
         if (!status) {
             //didnt find object
             this.contexts.push(obj1);
@@ -64,14 +61,13 @@ class Contextmanager {
 
     }
 
+
+
     compareResults(personsArray) {
         personsArray = this.values;
         var sp = new Specialization();
         var resultsHolder = new Specialization();
-        var res;
 
-        console.log(this.contexts);
-        console.log(this.values);
 
         resultsHolder.computerScience = this.compareSpecific(personsArray, sp.computerScience);
         resultsHolder.networking = this.compareSpecific(personsArray, sp.networking);
@@ -80,22 +76,20 @@ class Contextmanager {
         resultsHolder.multimedia = this.compareSpecific(this.values, sp.multimedia);
         resultsHolder.animation = this.compareSpecific(this.values, sp.animation);
 
+        //TODO return results and display options for each
 
-        console.log(resultsHolder);
-
+        return resultsHolder;
     }
 
     compareSpecific(personArray, specializationArray) {
         var total = 0;
         for (var i = 0; i < personArray.length; i++) {
-
             var ans = personArray[i] / specializationArray[i];
             if (ans >= 1) ans = 1;
             total = total + ans;
-
         }
-
         total = total * (100 / personArray.length);
+        total = Math.ceil(total);
         return total;
     }
 }

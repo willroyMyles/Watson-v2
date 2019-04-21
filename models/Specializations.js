@@ -1,5 +1,6 @@
 class Specializations {
     constructor() {
+        // values added based off model
         this.computerScience = [5, 3, 5, 2];
         this.networking = [1, 4, 2, 1];
         this.informationSystems = [5, 5, 3, 2];
