@@ -46,7 +46,7 @@ module.exports = async function(app) {
             setTimeout(() => {
                 sendMessage(msg, callBack);
                 return;
-            }, 1500);
+            }, 500);
         }
 
         assistant.message({
@@ -64,16 +64,11 @@ module.exports = async function(app) {
             .then(res => {
                 var didntUnderstand;
                 var arrResponse = res.output.generic;
-                var contextProperty = res.context.skills; //["main skill"].user_defined;
+                var contextProperty = res.context.skills;
                 if (contextProperty !== undefined) {
                     var contexts = contextProperty['main skill'].user_defined;
-                    console.log(contexts[0]);
-                    console.log(contexts[1]);
                     cm.add(contexts);
-                    //contextManger.insertToObject(contexts);
                 }
-                //console.log(JSON.stringify(contextProperty, null, 2));
-
                 arrResponse.forEach(element => {
                     switch (element.response_type) {
                         //if response type is text
@@ -85,6 +80,9 @@ module.exports = async function(app) {
                             if (element.text == "I didn\'t understand. You can try rephrasing.") {
                                 console.log('didnt understand');
                                 didntUnderstand = msg;
+                            }
+                            if (element.text == "checking results") {
+                                cm.compareResults();
                             }
                             break;
                         case 'option':
