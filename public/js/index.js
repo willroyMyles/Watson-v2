@@ -126,6 +126,7 @@ form_handler("#register_form", validate_registration_form, null, null, null, nul
 var dialogBox = $('#dialog');
 
 dialogBox.on('click', 'a.user-actions', function() {
+    console.log('flip called');
     dialogBox.toggleClass('flip');
 });
 
