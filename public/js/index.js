@@ -50,9 +50,10 @@ function form_handler(form_name, custom_validation, success_message, error_messa
                 submitButton.disabled = false;
                 return false;
             }
+            submitButton.disabled = false;
             return true;
         }
-        //e.preventDefault(); //STOP default action
+        e.preventDefault(); //STOP default action
     });
     $(document).click(function(e) { // Whenever the user clicks inside the form, the error messages will be removed.
         if ($(e.target).closest(form_name).length) {
