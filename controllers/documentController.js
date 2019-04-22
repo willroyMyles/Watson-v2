@@ -38,7 +38,7 @@ module.exports = (app) => {
 
     //set login route
     app.get('/index', (req, res) => {
-        res.render('login');
+        res.render('chat3');
     });
     app.get('/', (req, res) => {
         res.render('login');
