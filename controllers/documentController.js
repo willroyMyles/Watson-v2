@@ -38,26 +38,29 @@ module.exports = (app) => {
 
     //set login route
     app.get('/index', (req, res) => {
-        res.render('signin');
+        res.render('login');
     });
     app.get('/', (req, res) => {
-        res.render('signin');
+        res.render('login');
     });
     app.get('/signin', (req, res) => {
-        res.render('signin');
+        res.render('login');
     });
     app.get('/signup', (req, res) => {
-        res.render('signup');
+        res.render('login');
     });
     app.get('/chat', (req, res) => {
         res.render('chat1');
     });
 
     app.post('/signin', bodyParser, async(req, res) => {
-        await User.findOne({ username: req.body.username, password: req.body.password }, (err, data) => {
+
+        console.log(req.body)
+
+        await User.findOne({ username: req.body.user_username, password: req.body.user_password }, (err, data) => {
 
             if (data == null) {
-                res.render('signin');
+                res.render('login');
                 console.log('data is null');
             } else {
                 console.log(data);
