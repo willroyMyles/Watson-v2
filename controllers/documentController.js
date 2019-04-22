@@ -2,35 +2,36 @@ var bodyParser = require('body-parser').urlencoded({ extended: false });
 var mongoose = require('mongoose'); // database manager
 mongoose.connect('mongodb+srv://user:password.@watson-utech-assistant-xkgae.mongodb.net/test?retryWrites=true', { useNewUrlParser: true });
 var User = require('../models/user');
-var Item = require('../models/item');
-var parse5 = require('parse5');
+var swal = require('sweetalert2');
 
 
 module.exports = (app) => {
 
+    console.log('documnet conroller loaded');
 
 
-    var request = require('request');
-    var cheerio = require('cheerio');
-    request('https://www.payscale.com/college-salary-report/majors-that-pay-you-back/bachelors?orderBy=MajorName&search=information systems', (err, res, body) => {
-        var $ = cheerio.load(body);
-        var tableBody = $('tbody');
-        var tableRow = tableBody.find('tr');
+    app.post('/swal', (req, res) => {
+        var request = require('request');
+        var cheerio = require('cheerio');
+        request('https://www.payscale.com/college-salary-report/majors-that-pay-you-back/bachelors?orderBy=MajorName&search=information systems', (err, res, body) => {
+            var $ = cheerio.load(body);
+            var tableBody = $('tbody');
+            var tableRow = tableBody.find('tr');
 
 
-        var counter = 0;
-        var array = [];
+            var counter = 0;
+            var array = [];
 
-        tableRow.each(function(i, elem) {
-            console.log(counter);
-            console.log($(this).children().children().text());
+            tableRow.each(function(i, elem) {
+                console.log(counter);
+                console.log($(this).children().children().text());
 
-            if (counter == 2 || counter == 4 || counter == 5 || counter == 6) array.push($(this).children().children().text());
-            counter++;
-            if (counter >= 7) counter = 0;
+                if (counter == 2 || counter == 4 || counter == 5 || counter == 6) array.push($(this).children().children().text());
+                counter++;
+                if (counter >= 7) counter = 0;
+            });
         });
     });
-
 
     var watson;
     var user = User();
@@ -81,8 +82,6 @@ module.exports = (app) => {
             res.redirect('signin');
         })
     });
-
-
 
     app.post('/chat', bodyParser, async function(req, res) {
         async function sen(item, optionalArgument) {
