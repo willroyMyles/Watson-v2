@@ -92,10 +92,10 @@ function writeOption(element){
 element.option.forEach(option =>{
 		var buttonLabel = option.label;
 		var buttonValue = option.value.input.text;
-$('<li class="replies"><img src=/images/watson.png")" alt="" /><p>' + element.title + '<br><button class="option-button" onclick="" href="#">'+  buttonLabel +'</button> </p></li>').appendTo($('.messages ul'));
-		$(".option-button").click(function(){
-				sendMsgToController(buttonValue);
-		});
+$('<li class="replies"><img src=/images/watson.png")" alt="" /><p>' + element.title + '<br><button class="option-button" onclick="sendMsgToController('+"'"+buttonValue+"'"+')" href="#">'+  buttonLabel +'</button> </p></li>').appendTo($('.messages ul'));
+		// $(".option-button").click(function(){
+		// 		sendMsgToController(buttonValue);
+		// });
 });
 	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 }
