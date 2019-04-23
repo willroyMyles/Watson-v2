@@ -40,6 +40,7 @@ module.exports = (app) => {
     app.get('/index', (req, res) => {
         res.render('chat3');
     });
+
     app.get('/', (req, res) => {
         res.render('login');
     });
