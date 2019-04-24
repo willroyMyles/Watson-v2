@@ -673,13 +673,13 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: #27ae60;
+    /* background: #27ae60; */
     font-family: "proxima-nova", "Source Sans Pro", sans-serif;
     font-size: 1em;
     letter-spacing: 0.1px;
     color: #32465a;
     text-rendering: optimizeLegibility;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    text-shadow: 1px 1px 1px rgba(109, 109, 109, 0.2);
     -webkit-font-smoothing: antialiased;
 }
 
@@ -767,9 +767,17 @@ body {
 .content .messages ul li {
     display: inline-block;
     clear: both;
-    margin: 10px 15px 0px 15px;
-    width: calc(100% - 25px);
+    margin: 10px 15px 0px -25px;
+    width: calc(100% - 0px);
     font-size: 0.9em;
+}
+
+.content .messages ul li.sent {
+    margin-left: -25px;
+}
+
+.content .messages ul li.replies {
+    margin-right: -135px;
 }
 
 .content .messages ul li:nth-last-child(1) {
@@ -804,7 +812,8 @@ body {
 .content .messages ul li p {
     display: inline-block;
     padding: 10px 15px;
-    border-radius: 20px;
+    border-radius: 10px;
+    border: 1px solid rgb(212, 212, 212);
     max-width: 205px;
     line-height: 120%;
 }
@@ -830,7 +839,7 @@ body {
     font-family: "proxima-nova", "Source Sans Pro", sans-serif;
     float: left;
     border: none;
-    width: calc(100% - 90px);
+    width: 95%;
     padding: 11px 32px 10px 8px;
     font-size: 0.8em;
     color: #32465a;
@@ -869,9 +878,11 @@ body {
 }
 
 .content .message-input .wrap button {
-    float: right;
-    border: none;
+    float: left;
+    border: 1px solid rgb(212, 212, 212);
     width: 50px;
+    width: 5%;
+    height: 40px;
     padding: 12px 0;
     cursor: pointer;
     background: #32465a;

@@ -3,6 +3,7 @@ var mongoose = require('mongoose'); // database manager
 mongoose.connect('mongodb+srv://user:password.@watson-utech-assistant-xkgae.mongodb.net/test?retryWrites=true', { useNewUrlParser: true });
 var User = require('../models/user');
 var swal = require('sweetalert2');
+var Spec = require('../models/Specializations');
 
 
 module.exports = (app) => {
@@ -103,6 +104,15 @@ module.exports = (app) => {
 
 
         await watson.sendMessage(req.body.item, sen, results);
+    });
+
+    app.post('/specialization', bodyParser, async(req, res) => {
+        async function information(info) {
+            res.send(info);
+        }
+
+        var spec = new Spec();
+        spec.getInfo(req.body.item, information);
     });
 
 }

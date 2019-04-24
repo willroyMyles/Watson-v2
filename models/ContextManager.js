@@ -69,12 +69,12 @@ class Contextmanager {
         var resultsHolder = new Specialization();
 
 
-        resultsHolder.computerScience = this.compareSpecific(personsArray, sp.computerScience);
-        resultsHolder.networking = this.compareSpecific(personsArray, sp.networking);
-        resultsHolder.informationSystems = this.compareSpecific(personsArray, sp.informationSystems);
-        resultsHolder.enterpriseSystems = this.compareSpecific(personsArray, sp.enterpriseSystems);
-        resultsHolder.multimedia = this.compareSpecific(this.values, sp.multimedia);
-        resultsHolder.animation = this.compareSpecific(this.values, sp.animation);
+        resultsHolder.ComputerScience = this.compareSpecific(personsArray, sp.ComputerScience);
+        resultsHolder.Networking = this.compareSpecific(personsArray, sp.Networking);
+        resultsHolder.InformationSystems = this.compareSpecific(personsArray, sp.InformationSystems);
+        resultsHolder.EnterpriseSystems = this.compareSpecific(personsArray, sp.EnterpriseSystems);
+        resultsHolder.Multimedia = this.compareSpecific(this.values, sp.Multimedia);
+        resultsHolder.Animation = this.compareSpecific(this.values, sp.Animation);
 
         //TODO return results and display options for each
 

@@ -9,6 +9,8 @@
 	<link rel="stylesheet" media="screen" href="/assets/main.css")>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 </head>
 <body>
 <div id="frame">
@@ -152,12 +154,55 @@ function writeResults(element){
 }
 
 function sweetat(text){
-	var txt = text+"";
-	//TODO change each words format
+	var arrString = text.match(/[A-Z][a-z]+/g);
+	console.log(arrString);
+	var txt = arrString[0];
+	if(arrString[1] !==undefined) txt = txt + " " + arrString[1];
 	//TODO send message to controller to get values for each search
 
-	console.log(txt);
-	swal(txt); 
+
+
+var item = {item : txt};
+	$.ajax({
+        type: 'POST',
+        url: '/specialization',
+        data: item,
+        success: function(data){
+					//do something with the data via front-end framework
+					var count = 0;
+					var arr =[];
+					var info= {title:"", startingSalary: "", potentialSalary:"",jobSatisfaction:""};
+					var infoString ="";
+
+					data.forEach(element=>{
+						// console.log(element);
+						// if(count == 0) info.title = element;
+						// if(count == 1) info.startingSalary = element;
+						// if(count == 2) info.potentialSalary = element;
+						// if(count == 3) info.jobSatisfaction = element;
+						// if(count == 4) arr.push(info);
+						// count++;
+						// if(count >= 4 ) count =0;
+
+
+
+						if(count == 0) infoString = infoString + '<h1>'+ element+'</h1></br>';
+						if(count == 1) infoString = infoString + '<p> Starting salary : '+ element+'</p></br>';
+						if(count == 2) infoString = infoString + '<p> Mid jop salary : '+ element+'</p></br>';
+						if(count == 3) infoString = infoString + '<p> Expected Job Satisfaction : '+ element+'</p></br></br></br>';
+						
+						count++;
+						if(count >= 4 ) count =0;
+					});
+
+					Swal.fire({
+						html : infoString
+					});
+
+
+				}
+      });
+
 }
 
 //message sent from interactions
