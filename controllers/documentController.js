@@ -82,7 +82,11 @@ module.exports = (app) => {
 
     app.post('/signup', bodyParser, (req, res) => {
 
-        User(req.body).save(function(err, data) {
+        console.log(req.body);
+
+        var user = { username: req.body.user_username, password: req.body.user_password, question: [] };
+
+        User(user).save(function(err, data) {
             if (err) throw err;
             res.redirect('signin');
         })
