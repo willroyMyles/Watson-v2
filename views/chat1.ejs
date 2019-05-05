@@ -85,7 +85,7 @@ function newMessage() {
 };
 
 function writeMessage(msg){
-	$('<li class="replies"><img src=/images/watson.png")" alt="" /><p>' + msg + '</p></li>').appendTo($('.messages ul'));
+	$('<li class="replies"><img src="/images/watson.png" alt="" /><p>' + msg + '</p></li>').appendTo($('.messages ul'));
 //	$('.contact.active .preview').html('<span>You: </span>' + msg);
 	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 }
@@ -94,7 +94,7 @@ function writeOption(element){
 element.option.forEach(option =>{
 		var buttonLabel = option.label;
 		var buttonValue = option.value.input.text;
-$('<li class="replies"><img src=/images/watson.png")" alt="" /><p>' + element.title + '<br><button class="option-button" onclick="sendMsgToController('+"'"+buttonValue+"'"+')" href="#">'+  buttonLabel +'</button> </p></li>').appendTo($('.messages ul'));
+$('<li class="replies"><img src="/images/watson.png" alt="" /><p>' + element.title + '<br><button class="option-button" onclick="sendMsgToController('+"'"+buttonValue+"'"+')" href="#">'+  buttonLabel +'</button> </p></li>').appendTo($('.messages ul'));
 		// $(".option-button").click(function(){
 		// 		sendMsgToController(buttonValue);
 		// });
@@ -125,7 +125,7 @@ function bubbleSort(nameArr, valueArr){
 }
 
 function writeResults(element){
-	$('<li class="replies"><img src=/images/watson.png")" alt="" /><p>your results are as follows: </p></br></li>').appendTo($('.messages ul'));
+	$('<li class="replies"><img src="/images/watson.png" alt="" /><p>your results are as follows: </p></br></li>').appendTo($('.messages ul'));
 	var nameArr = [];
   var valueArr = [];
 	
@@ -147,7 +147,7 @@ function writeResults(element){
 	var index =0;
 	valueArr.forEach( num =>{
 
-		$('<li class="replies"><img src=/images/watson.png")" alt="" /><p><button onclick="sweetat('+"'"+ nameArr[index]+"'"+')" href="#" class="submit-button">'+ nameArr[index] +'</button>  with compatability of '+ num+'%</p></br></li>').appendTo($('.messages ul'));
+		$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ nameArr[index]+"'"+')" href="#" class="submit-button">'+ nameArr[index] +'</button>  with compatability of '+ num+'%</p></br></li>').appendTo($('.messages ul'));
 		index++;
 	})
 
