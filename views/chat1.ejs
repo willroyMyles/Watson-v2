@@ -72,6 +72,39 @@
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script >$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
+function stopSpeaking(){
+	if(speechSynthesis.speaking){
+		speechSynthesis.cancel();
+	}
+}
+
+function talk(text){
+	console.log('readfy');
+  if ('speechSynthesis' in window) {
+    var msg = new SpeechSynthesisUtterance();
+	var voices = window.speechSynthesis.getVoices();
+	msg.voice = voices[10]; // Note: some voices don't support altering params
+	msg.voiceURI = 'native';
+	msg.volume = 1; // 0 to 1
+	msg.rate = 1.2; // 0.1 to 10
+	msg.pitch = 1; //0 to 2
+	msg.text = text;
+	msg.lang = 'en-US';
+
+      speechSynthesis.speak(msg);
+
+      msg.onend = function(e) {
+        console.log('Finished in ' + event.elapsedTime + ' seconds.');
+      };
+
+      speechSynthesis.speak(msg);
+    
+  } else {
+    //$('#modal1').openModal();
+  }
+
+};
+
 
 function newMessage() {
 	message = $(".message-input input").val();
@@ -82,12 +115,14 @@ function newMessage() {
 	$('.message-input input').val(null);
 	//$('.contact.active .preview').html('<span>You: </span>' + message);
 	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+	stopSpeaking();
 };
 
 function writeMessage(msg){
 	$('<li class="replies"><img src="/images/watson.png" alt="" /><p>' + msg + '</p></li>').appendTo($('.messages ul'));
-//	$('.contact.active .preview').html('<span>You: </span>' + msg);
 	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+	//send message to controller
+	talk(msg)
 }
 
 function writeOption(element){

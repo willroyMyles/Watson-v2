@@ -6,6 +6,7 @@ var swal = require('sweetalert2');
 var Spec = require('../models/Specializations');
 
 
+
 module.exports = (app) => {
 
     console.log('documnet conroller loaded');
@@ -117,6 +118,13 @@ module.exports = (app) => {
 
         var spec = new Spec();
         spec.getInfo(req.body.item, information);
+    });
+
+    app.post('/say', bodyParser, async(req, res) => {
+        console.log(req.body);
+        var msg = new SpeechSynthesisUtterance('Hello World');
+        window.speechSynthesis.speak(msg);
+
     });
 
 }

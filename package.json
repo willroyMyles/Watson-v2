@@ -1,32 +1,31 @@
 {
-  "name": "module-specialization-app",
-  "version": "1.0.0",
-  "description": "a chat interface to help students select their specialization ",
-  "main": "app.js",
-  "engines": {
-    "node": "10"
-  },
-  "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "logs": "heroku logs --tail -a watson-utech-assistant"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "cheerio": "^1.0.0-rc.3",
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "heroku": "^7.22.10",
-    "mongoose": "^5.5.2",
-    "nodemon": "^1.18.11",
-    "request": "^2.88.0",
-    "say": "^0.15.0",
-    "sweetalert2": "^8.8.7",
-    "watson-developer-cloud": "^4.0.1"
-  },
-  "devDependencies": {
-    "node-sass": "^4.11.0"
-  }
+    "name": "module-specialization-app",
+    "version": "1.0.0",
+    "description": "a chat interface to help students select their specialization ",
+    "main": "app.js",
+    "engines": {
+        "node": "10"
+    },
+    "scripts": {
+        "start": "node app.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "logs": "heroku logs --tail -a watson-utech-assistant"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "cheerio": "^1.0.0-rc.3",
+        "ejs": "^2.6.1",
+        "express": "^4.16.4",
+        "heroku": "^7.22.10",
+        "mongoose": "^5.5.2",
+        "nodemon": "^1.18.11",
+        "request": "^2.88.0",
+        "sweetalert2": "^8.8.7",
+        "watson-developer-cloud": "^4.0.1"
+    },
+    "devDependencies": {
+        "node-sass": "^4.12.0"
+    }
 }
