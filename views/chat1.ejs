@@ -134,7 +134,7 @@ function writeOption(element){
 element.option.forEach(option =>{
 		var buttonLabel = option.label;
 		var buttonValue = option.value.input.text;
-$('<li class="replies"><img src="/images/watson.png" alt="" /><p>' + element.title + '<br><button class="option-button" onclick="sendMsgToController('+"'"+buttonValue+"'"+')" href="#">'+  buttonLabel +'</button> </p></li>').appendTo($('.messages ul'));
+$('<li class="replies"><img src="/images/watson.png" alt="" /><p>' + element.title + '<br><button class="button" onclick="sendMsgToController('+"'"+buttonValue+"'"+')" href="#">'+  buttonLabel +'</button> </p></li>').appendTo($('.messages ul'));
 });
 $(".messages").animate({ scrollTop: $(document).height() }, 100);
 }
@@ -194,7 +194,7 @@ function writeResults(element){
 		$('<li class="replies"><img src="/images/watson.png" alt="" /><p>According to your results, your line of best fit indeicates the following</p></br></li>').appendTo($('.messages ul'));
 	var index =0;
 	valueArr.forEach( num =>{
-		$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ nameArr[index]+"'"+')" href="#" class="submit-button">'+ nameArr[index] +'</button>  with compatability of '+ (100-num)+'%</p></br></li>').appendTo($('.messages ul'));
+		$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ nameArr[index]+"'"+')" href="#" class="button">'+ nameArr[index] +'</button>  with compatability of '+ (100-num)+'%</p></br></li>').appendTo($('.messages ul'));
 		index++;
 	});
 
@@ -215,37 +215,37 @@ var myChart = new Chart(ctx, {
         datasets: [{
             label: 'Multimedia',
             data: data1.Multimedia,
-            backgroundColor:' rgba(255, 99, 132, 0.2)',
+            backgroundColor:' rgba(255, 99, 132, 0.0)',
             borderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 1,
         },{
             label: 'Enterprise Systems',
             data: data1.EnterpriseSystems,
-            backgroundColor:' rgba(75, 192, 186, 0.2)',
+            backgroundColor:' rgba(75, 192, 186, 0.0)',
             borderColor: ' rgba(75, 192, 186, 1)',
             borderWidth: 1,
         },{
             label: 'Information Systems',
             data: data1.InformationSystems,
-            backgroundColor:' rgba(255, 206, 82, 0.2)',
+            backgroundColor:' rgba(255, 206, 82, 0.0)',
             borderColor: 'rgba(255, 206, 82, 1)',
             borderWidth: 1,
         },{
             label: 'Networking',
             data: data1.Networking,
-            backgroundColor:' rgba(54, 162, 232, 0.2)',
+            backgroundColor:' rgba(54, 162, 232, 0.0)',
             borderColor: 'rgba(54, 162, 232, 1)',
             borderWidth: 1,
         },{
             label: 'Computer Science',
             data: data1.ComputerScience,
-            backgroundColor:' rgba(215, 29, 82, 0.2)',
+            backgroundColor:' rgba(215, 29, 82, 0.0)',
             borderColor: 'rgba(215, 29, 82, 1)',
             borderWidth: 1,
         },{
             label: 'My Results',
             data: valueArr,
-            backgroundColor:' rgba(155, 99, 232, 0.2)',
+            backgroundColor:' rgba(155, 99, 232, 0.0)',
             borderColor: 'rgba(155, 99, 232, 1)',
             borderWidth: 1,
         }]
