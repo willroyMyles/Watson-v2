@@ -11,6 +11,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+	 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js">	 </script>
 </head>
 <body>
 <div id="frame">
@@ -72,6 +73,9 @@
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script >$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
+
+
+
 function stopSpeaking(){
 	if(speechSynthesis.speaking){
 		speechSynthesis.cancel();
@@ -114,13 +118,14 @@ function newMessage() {
 	$('<li class="sent"><img src="@routes.Assets.versioned("images/male.png")" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
 	$('.message-input input').val(null);
 	//$('.contact.active .preview').html('<span>You: </span>' + message);
-	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+$(".messages").animate({ scrollTop: $(document).height() }, 100);
 	stopSpeaking();
 };
 
 function writeMessage(msg){
+	
 	$('<li class="replies"><img src="/images/watson.png" alt="" /><p>' + msg + '</p></li>').appendTo($('.messages ul'));
-	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+$(".messages").animate({ scrollTop: $(document).height() }, 100);
 	//send message to controller
 	talk(msg)
 }
@@ -130,11 +135,8 @@ element.option.forEach(option =>{
 		var buttonLabel = option.label;
 		var buttonValue = option.value.input.text;
 $('<li class="replies"><img src="/images/watson.png" alt="" /><p>' + element.title + '<br><button class="option-button" onclick="sendMsgToController('+"'"+buttonValue+"'"+')" href="#">'+  buttonLabel +'</button> </p></li>').appendTo($('.messages ul'));
-		// $(".option-button").click(function(){
-		// 		sendMsgToController(buttonValue);
-		// });
 });
-	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+$(".messages").animate({ scrollTop: $(document).height() }, 100);
 }
 
 function bubbleSort(nameArr, valueArr){
@@ -179,13 +181,109 @@ function writeResults(element){
 	console.log(nameArr);
 	console.log(valueArr);
 
+		$.ajax({
+        type: 'POST',
+        url: '/chart',
+        data: item,
+        success: function(data){
+					//do something with the data via front-end framework
+					createChart(nameArr, element.values, data);
+					}
+		}); 
+
+
 	var index =0;
 	valueArr.forEach( num =>{
-
 		$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ nameArr[index]+"'"+')" href="#" class="submit-button">'+ nameArr[index] +'</button>  with compatability of '+ num+'%</p></br></li>').appendTo($('.messages ul'));
 		index++;
-	})
+	});
 
+
+}
+
+function createChart(nameArr, valueArr, data1){
+	var width = $('.messages').width();
+	var height = $('.messages').height();
+	console.log(data1.Multimedia);
+			$('<li class="replies"><img src="/images/watson.png" alt="" /><canvas id="myChart" width="'+width+'" height="'+height+'"></canvas></li>').appendTo($('.messages ul'));
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+		type: 'line',
+    data: {
+					labels: ['job opportunities','potential income', 'passion', 'logical reasoning', 'math aptitude','english aptitude','programming aptitude','networks aptitude',
+        						'concrete thinker','conceptual thinker', 'organizational skills','analytical skills'],
+
+        datasets: [{
+            label: 'Multimedia',
+            data: data1.Multimedia,
+            backgroundColor:' rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+        },{
+            label: 'Enterprise Systems',
+            data: data1.EnterpriseSystems,
+            backgroundColor:' rgba(75, 192, 186, 0.2)',
+            borderColor: ' rgba(75, 192, 186, 1)',
+            borderWidth: 1,
+        },{
+            label: 'Information Systems',
+            data: data1.InformationSystems,
+            backgroundColor:' rgba(255, 206, 82, 0.2)',
+            borderColor: 'rgba(255, 206, 82, 1)',
+            borderWidth: 1,
+        },{
+            label: 'Networking',
+            data: data1.Networking,
+            backgroundColor:' rgba(54, 162, 232, 0.2)',
+            borderColor: 'rgba(54, 162, 232, 1)',
+            borderWidth: 1,
+        },{
+            label: 'Computer Science',
+            data: data1.ComputerSceince,
+            backgroundColor:' rgba(215, 249, 232, 0.2)',
+            borderColor: 'rgba(215, 249, 232, 1)',
+            borderWidth: 1,
+        },{
+            label: 'My Results',
+            data: valueArr,
+            backgroundColor:' rgba(155, 99, 232, 0.2)',
+            borderColor: 'rgba(155, 99, 232, 1)',
+            borderWidth: 1,
+        }]
+		},
+		
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                },
+                scaleLabel: {
+                     display: true,
+                     labelString: 'duno yet',
+                  }
+            }]
+        }
+    }
+});
+
+setTimeout(function() {
+  myChart.options.scales = {
+    xAxes: [],
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: false
+				},
+				 scaleLabel: {
+                     display: true,
+                     labelString: 'duno yet',
+        }
+      }
+    ]
+  };
+  myChart.update();
+}, 1000);
 }
 
 function sweetat(text){
@@ -232,6 +330,7 @@ var item = {item : txt};
 
 //message sent from interactions
 function sendMsgToController(msg){
+		stopSpeaking();
 	console.log(msg);
 	item = {item: msg};
       $.ajax({

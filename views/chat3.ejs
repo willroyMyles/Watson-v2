@@ -80,15 +80,229 @@
     </div>
   </div>
 </div>
-  <script src='vendor/jquery/jquery-3.2.1.min.js'></script>
+ <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script >$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
-  
+function stopSpeaking(){
+	if(speechSynthesis.speaking){
+		speechSynthesis.cancel();
+	}
+}
 
-    <script  src="js/index.js"></script>
+function talk(text){
+	console.log('readfy');
+  if ('speechSynthesis' in window) {
+    var msg = new SpeechSynthesisUtterance();
+	var voices = window.speechSynthesis.getVoices();
+	msg.voice = voices[10]; // Note: some voices don't support altering params
+	msg.voiceURI = 'native';
+	msg.volume = 1; // 0 to 1
+	msg.rate = 1.2; // 0.1 to 10
+	msg.pitch = 1; //0 to 2
+	msg.text = text;
+	msg.lang = 'en-US';
+
+      speechSynthesis.speak(msg);
+
+      msg.onend = function(e) {
+        console.log('Finished in ' + event.elapsedTime + ' seconds.');
+      };
+
+      speechSynthesis.speak(msg);
+    
+  } else {
+    //$('#modal1').openModal();
+  }
+
+};
+
+
+function newMessage() {
+	message = $(".message-input input").val();
+	if($.trim(message) == '') {
+		return false;
+	}
+	$('<li class="sent"><img src="@routes.Assets.versioned("images/male.png")" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
+	$('.message-input input').val(null);
+	//$('.contact.active .preview').html('<span>You: </span>' + message);
+	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+	stopSpeaking();
+};
+
+function writeMessage(msg){
+	$('<li class="replies"><img src="/images/watson.png" alt="" /><p>' + msg + '</p></li>').appendTo($('.messages ul'));
+	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+	//send message to controller
+	talk(msg)
+}
+
+function writeOption(element){
+element.option.forEach(option =>{
+		var buttonLabel = option.label;
+		var buttonValue = option.value.input.text;
+$('<li class="replies"><img src="/images/watson.png" alt="" /><p>' + element.title + '<br><button class="option-button" onclick="sendMsgToController('+"'"+buttonValue+"'"+')" href="#">'+  buttonLabel +'</button> </p></li>').appendTo($('.messages ul'));
+		// $(".option-button").click(function(){
+		// 		sendMsgToController(buttonValue);
+		// });
+});
+	$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+}
+
+function bubbleSort(nameArr, valueArr){
+	var swapped;
+    do {
+        swapped = false;
+        for (var i=0; i < valueArr.length-1; i++) {
+            if (valueArr[i] < valueArr[i+1]) {
+								var temp = valueArr[i];
+								var tempWord = nameArr[i];
+
+								valueArr[i] = valueArr[i+1];
+								nameArr[i] = nameArr[i+1];
+								
+                valueArr[i+1] = temp;
+                nameArr[i+1] = tempWord;
+                swapped = true;
+            }
+        }
+		} while (swapped);
+		
+	return {nameArr, valueArr};
+}
+
+function writeResults(element){
+	$('<li class="replies"><img src="/images/watson.png" alt="" /><p>your results are as follows: </p></br></li>').appendTo($('.messages ul'));
+	var nameArr = [];
+  var valueArr = [];
+	
+	// change object into array
+  for (var prop in element.results) {
+    if (element.results.hasOwnProperty(prop)) {
+			nameArr.push(prop);
+			valueArr.push(element.results[prop])
+    }
+	}
+
+	var item = bubbleSort(nameArr, valueArr);
+	nameArr = item.nameArr;
+	valueArr = item.valueArr;
+	
+	console.log(nameArr);
+	console.log(valueArr);
+
+	var index =0;
+	valueArr.forEach( num =>{
+
+		$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ nameArr[index]+"'"+')" href="#" class="submit-button">'+ nameArr[index] +'</button>  with compatability of '+ num+'%</p></br></li>').appendTo($('.messages ul'));
+		index++;
+	})
+
+}
+
+function sweetat(text){
+	var arrString = text.match(/[A-Z][a-z]+/g);
+	console.log(arrString);
+	var txt = arrString[0];
+	if(arrString[1] !==undefined) txt = txt + " " + arrString[1];
+	//TODO send message to controller to get values for each search
 
 
 
+var item = {item : txt};
+	$.ajax({
+        type: 'POST',
+        url: '/specialization',
+        data: item,
+        success: function(data){
+					//do something with the data via front-end framework
+					var count = 0;
+					var arr =[];
+					var info= {title:"", startingSalary: "", potentialSalary:"",jobSatisfaction:""};
+					var infoString ="";
 
-</body>
+					data.forEach(element=>{
 
-</html>
+						if(count == 0) infoString = infoString + '<h1>'+ element+'</h1></br>';
+						if(count == 1) infoString = infoString + '<p> Starting salary : '+ element+'</p></br>';
+						if(count == 2) infoString = infoString + '<p> Mid jop salary : '+ element+'</p></br>';
+						if(count == 3) infoString = infoString + '<p> Expected Job Satisfaction : '+ element+'</p></br></br></br>';
+						
+						count++;
+						if(count >= 4 ) count =0;
+					});
+
+					Swal.fire({
+						html : infoString
+					});
+
+
+				}
+      });
+
+}
+
+//message sent from interactions
+function sendMsgToController(msg){
+	console.log(msg);
+	item = {item: msg};
+      $.ajax({
+        type: 'POST',
+        url: '/chat',
+        data: item,
+        success: function(data){
+					//do something with the data via front-end framework
+					data.forEach(element => {
+						if(element.response_type === 'text') writeMessage(element.text);
+						if(element.response_type === 'option') writeOption(element);
+					});
+        }
+      });
+}
+
+//message sent from chat box
+function sendToController(){
+	message = $(".message-input input").val();
+	if($.trim(message) == '') {
+		return false;
+	}
+	
+	item = {item: message};
+      $.ajax({
+        type: 'POST',
+        url: '/chat',
+        data: item,
+        success: function(data){
+					//do something with the data via front-end framework
+					data.forEach(element => {
+						if(element.response_type === 'text') writeMessage(element.text);
+						if(element.response_type === 'option') writeOption(element);
+						if(element.response_type === 'results') writeResults(element);
+					});
+        }
+      });
+}
+
+$('.submit').click(function() {
+		sendToController();
+	newMessage();
+	//  send to controller
+});
+
+$(window).on('keydown', function(e) {
+  if (e.which == 13) {
+		sendToController();
+		newMessage();
+    return false;
+  }
+});
+
+$(document).ready(function(){
+
+	setTimeout(() => {
+			sendMsgToController('hi');
+	}, 2000);
+
+});
+//# sourceURL=pen.js
+</script>
+</body></html>

@@ -55,13 +55,60 @@ class Contextmanager {
 
         if (!status) {
             //didnt find object
+            console.log(obj1);
             this.contexts.push(obj1);
             this.values.push(obj2);
         }
 
     }
 
+    getLineOfBestFit() {
+        var independentVariable = new Specialization();
 
+        //find the closest values
+        for (let index = 0; index < this.values.length; index++) {
+            const element = this.values[index];
+            independentVariable.ComputerScience[index] = Math.abs(independentVariable.ComputerScience[index] - element);
+            independentVariable.Multimedia[index] = Math.abs(independentVariable.Multimedia[index] - element);
+            independentVariable.InformationSystems[index] = Math.abs(independentVariable.InformationSystems[index] - element);
+            independentVariable.EnterpriseSystems[index] = Math.abs(independentVariable.EnterpriseSystems[index] - element);
+            independentVariable.Networking[index] = Math.abs(independentVariable.Networking[index] - element);
+        }
+
+        var obj = {};
+        var res = { ComputerScience, Networking, Multimedia, InformationSystems, EnterpriseSystems };
+        var cs = net = mul = info = ent = 0;
+
+        independentVariable.ComputerScience.forEach((item, index) => {
+            cs = cs + item;
+        });
+        independentVariable.Networking.forEach((item, index) => {
+            net = net + item;
+        });
+        independentVariable.Multimedia.forEach((item, index) => {
+            mul = mul + item;
+        });
+        independentVariable.InformationSystems.forEach((item, index) => {
+            info = info + item;
+        });
+        independentVariable.EnterpriseSystems.forEach((item, index) => {
+            ent = ent + item;
+        });
+
+        res.ComputerScience = cs;
+        res.Networking = net;
+        res.Multimedia = mul;
+        res.InformationSystems = info;
+        res.EnterpriseSystems = ent;
+
+        res.sort();
+        console.log(res);
+
+        obj.push(res);
+        return obj;
+
+
+    }
 
     compareResults(personsArray) {
         personsArray = this.values;
@@ -74,7 +121,6 @@ class Contextmanager {
         resultsHolder.InformationSystems = this.compareSpecific(personsArray, sp.InformationSystems);
         resultsHolder.EnterpriseSystems = this.compareSpecific(personsArray, sp.EnterpriseSystems);
         resultsHolder.Multimedia = this.compareSpecific(this.values, sp.Multimedia);
-        resultsHolder.Animation = this.compareSpecific(this.values, sp.Animation);
 
         //TODO return results and display options for each
 
@@ -88,8 +134,8 @@ class Contextmanager {
             if (ans >= 1) ans = 1;
             total = total + ans;
         }
-        total = total * (100 / personArray.length);
-        total = Math.ceil(total);
+        // total = total * (100 / personArray.length);
+        // total = Math.ceil(total);
         return total;
     }
 }

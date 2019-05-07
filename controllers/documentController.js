@@ -120,6 +120,14 @@ module.exports = (app) => {
         spec.getInfo(req.body.item, information);
     });
 
+    app.post('/chart', bodyParser, async(req, res) => {
+        async function information(info) {
+            res.send(info);
+        }
+        var spec = new Spec();
+        spec.getSpecializations(information);
+    });
+
     app.post('/say', bodyParser, async(req, res) => {
         console.log(req.body);
         var msg = new SpeechSynthesisUtterance('Hello World');

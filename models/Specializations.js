@@ -1,12 +1,31 @@
 class Specializations {
     constructor() {
         // values added based off model
-        this.ComputerScience = [5, 3, 5, 2];
-        this.Networking = [1, 4, 2, 1];
-        this.InformationSystems = [5, 5, 3, 2];
-        this.EnterpriseSystems = [5, 5, 3, 1];
-        this.Multimedia = [5, 3, 2, 2];
-        this.Animation = [5, 3, 2, 1];
+
+
+        //0 job opportunities
+        //1 potential income
+        //2 passion
+        //3 logical reasoning
+        //4 math aptitude
+        //5 english aptitude
+        //6 programming aptitube
+        //7 networks aptitude
+        //8 concrete thinker
+        //9 conceptual thinker
+        //10 organizational skills
+        //11 analytical skills
+
+
+        this.ComputerScience = [4.67, 4.67, 4.33, 5.0, 4.67, 3.33, 5.00, 2.67, 5, 2.67, 3.67, 5.0];
+        this.Networking = [3.67, 3.33, 3.67, 3.67, 5, 3, 3.33, 3.67, 3.0, 3.0, 3.33, 2.67];
+        this.InformationSystems = [2.67, 3.67, 3.0, 3.0, 2.33, 4.33, 2.33, 4.0, 3.33, 4.33, 3.33, 4.33];
+        this.EnterpriseSystems = [3.0, 3.0, 3.67, 3.33, 3.0, 4.0, 3.67, 3.33, 3.67, 3.67, 3.33, 4.33];
+        this.Multimedia = [3.33, 3.67, 4.33, 2.67, 2.67, 4.00, 2.33, 3.00, 3.0, 2.67, 3.0, 3.0];
+    }
+
+    getSpecializations(callback) {
+        callback(this);
     }
 
     getInfo(specialization, callabck) {

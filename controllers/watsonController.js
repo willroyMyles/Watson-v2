@@ -82,9 +82,11 @@ module.exports = async function(app) {
                             }
                             if (element.text == "checking results") {
                                 var results = cm.compareResults();
+                                var info = cm.getLineOfBestFit();
                                 var item = new ModelItem();
                                 item.response_type = 'results';
                                 item.results = results;
+                                item.values = cm.values;
                                 //callback1(item);
                                 arr.push(item);
                                 console.log('item pushed');
