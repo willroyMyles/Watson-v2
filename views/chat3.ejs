@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<div class="messages">
-			<ul>
+			<ul id="msgs" class="msgs">
 				<%# <li class="sent">
 					<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
 					<p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
@@ -92,8 +92,15 @@
   </div>
 </div>
  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-<script >$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+<script >scroll();
 
+function scroll(){
+	var elem = document.getElementsByClassName("msgs");
+	console.log($('.msgs').height());
+	elem.scrollTop += 1000;
+	$(".messages").animate({ scrollTop: $('.msgs').height() }, 100);
+
+}
 
 
 function stopSpeaking(){
@@ -135,15 +142,15 @@ function newMessage() {
 	$('<li class="sent"><img src="@routes.Assets.versioned("images/male.png")" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
 	$('.message-input input').val(null);
 	//$('.contact.active .preview').html('<span>You: </span>' + message);
-$(".messages").animate({ scrollTop: $(document).height() }, 100);
+//  $(".messages").animate({ scrollTop: $(document).height() }, 100);
 	stopSpeaking();
+scroll();
 };
 
 function writeMessage(msg){
 	
 	$('<li class="replies"><img src="/images/watson.png" alt="" /><p>' + msg + '</p></li>').appendTo($('.messages ul'));
-$(".messages").animate({ scrollTop: $(document).height() }, 100);
-	//send message to controller
+scroll();	//send message to controller
 	talk(msg)
 }
 
@@ -153,7 +160,8 @@ element.option.forEach(option =>{
 		var buttonValue = option.value.input.text;
 $('<li class="replies"><img src="/images/watson.png" alt="" /><p>' + element.title + '<br><button class="button" onclick="sendMsgToController('+"'"+buttonValue+"'"+')" href="#">'+  buttonLabel +'</button> </p></li>').appendTo($('.messages ul'));
 });
-$(".messages").animate({ scrollTop: $(document).height() }, 100);
+scroll();
+// $(".messages").animate({ scrollTop: $(document).height() }, 100);
 }
 
 function bubbleSort(nameArr, valueArr){
@@ -214,9 +222,7 @@ function writeResults(element){
 					}
 		}); 
 
-
-	
-
+scroll();
 
 }
 

@@ -776,7 +776,7 @@ body {
 .content .messages ul li {
     /* display: inline-block; */
     clear: both;
-    margin: 10px 15px 0px 5px;
+    margin: 15px 15px 0px 5px;
     width: calc(100% - 0px);
     font-size: 0.9em;
 }
@@ -790,7 +790,7 @@ body {
 }
 
 .content .messages ul li:nth-last-child(1) {
-    /* margin-bottom: 20px; */
+    margin-bottom: 180px;
 }
 
 .content .messages ul li.sent img {
