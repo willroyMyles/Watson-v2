@@ -53,7 +53,7 @@ module.exports = (app) => {
         res.render('login');
     });
     app.get('/chat', (req, res) => {
-        res.render('chat1');
+        res.render('chat3');
     });
 
     app.post('/signin', bodyParser, async(req, res) => {
