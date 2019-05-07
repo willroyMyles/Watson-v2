@@ -144,7 +144,7 @@ function bubbleSort(nameArr, valueArr){
     do {
         swapped = false;
         for (var i=0; i < valueArr.length-1; i++) {
-            if (valueArr[i] < valueArr[i+1]) {
+            if (valueArr[i] > valueArr[i+1]) {
 								var temp = valueArr[i];
 								var tempWord = nameArr[i];
 
@@ -162,7 +162,6 @@ function bubbleSort(nameArr, valueArr){
 }
 
 function writeResults(element){
-	$('<li class="replies"><img src="/images/watson.png" alt="" /><p>your results are as follows: </p></br></li>').appendTo($('.messages ul'));
 	var nameArr = [];
   var valueArr = [];
 	
@@ -192,9 +191,10 @@ function writeResults(element){
 		}); 
 
 
+		$('<li class="replies"><img src="/images/watson.png" alt="" /><p>According to your results, your line of best fit indeicates the following</p></br></li>').appendTo($('.messages ul'));
 	var index =0;
 	valueArr.forEach( num =>{
-		$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ nameArr[index]+"'"+')" href="#" class="submit-button">'+ nameArr[index] +'</button>  with compatability of '+ num+'%</p></br></li>').appendTo($('.messages ul'));
+		$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ nameArr[index]+"'"+')" href="#" class="submit-button">'+ nameArr[index] +'</button>  with compatability of '+ (100-num)+'%</p></br></li>').appendTo($('.messages ul'));
 		index++;
 	});
 
@@ -204,7 +204,6 @@ function writeResults(element){
 function createChart(nameArr, valueArr, data1){
 	var width = $('.messages').width();
 	var height = $('.messages').height();
-	console.log(data1.Multimedia);
 			$('<li class="replies"><img src="/images/watson.png" alt="" /><canvas id="myChart" width="'+width+'" height="'+height+'"></canvas></li>').appendTo($('.messages ul'));
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
@@ -239,9 +238,9 @@ var myChart = new Chart(ctx, {
             borderWidth: 1,
         },{
             label: 'Computer Science',
-            data: data1.ComputerSceince,
-            backgroundColor:' rgba(215, 249, 232, 0.2)',
-            borderColor: 'rgba(215, 249, 232, 1)',
+            data: data1.ComputerScience,
+            backgroundColor:' rgba(215, 29, 82, 0.2)',
+            borderColor: 'rgba(215, 29, 82, 1)',
             borderWidth: 1,
         },{
             label: 'My Results',

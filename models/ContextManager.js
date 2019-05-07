@@ -75,9 +75,13 @@ class Contextmanager {
             independentVariable.Networking[index] = Math.abs(independentVariable.Networking[index] - element);
         }
 
-        var obj = {};
-        var res = { ComputerScience, Networking, Multimedia, InformationSystems, EnterpriseSystems };
-        var cs = net = mul = info = ent = 0;
+        var obj = [];
+        var res = { ComputerScience: 0, Networking: 0, Multimedia: 0, InformationSystems: 0, EnterpriseSystems: 0 };
+        var cs = 0;
+        var net = 0;
+        var mul = 0;
+        var info = 0;
+        var ent = 0;
 
         independentVariable.ComputerScience.forEach((item, index) => {
             cs = cs + item;
@@ -101,11 +105,11 @@ class Contextmanager {
         res.InformationSystems = info;
         res.EnterpriseSystems = ent;
 
-        res.sort();
+        //res.sort();
         console.log(res);
 
         obj.push(res);
-        return obj;
+        return res;
 
 
     }
