@@ -116,13 +116,9 @@ function talk(text){
 	msg.text = text;
 	msg.lang = 'en-US';
 
-      speechSynthesis.speak(msg);
+  speechSynthesis.speak(msg);
 
-      msg.onend = function(e) {
-        console.log('Finished in ' + event.elapsedTime + ' seconds.');
-      };
-
-      speechSynthesis.speak(msg);
+     
     
   } else {
     //$('#modal1').openModal();
@@ -211,7 +207,8 @@ function writeResults(element){
 						$('<li class="replies"><img src="/images/watson.png" alt="" /><p>According to your results, your line of best fit indicates the following</p></br></li>').appendTo($('.messages ul'));
 	var index =0;
 	valueArr.forEach( num =>{
-		$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ nameArr[index]+"'"+')" href="#" class="button">'+ nameArr[index] +'</button>  with compatability of '+ (100-num)+'%</p></br></li>').appendTo($('.messages ul'));
+		var txt = spliStringAndReturn(nameArr[index]);
+		$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ txt+"'"+')" href="#" class="button">'+ txt +'</button>  with compatability of '+ (100-num)+'%</p></br></li>').appendTo($('.messages ul'));
 		index++;
 	});
 					}
@@ -307,11 +304,15 @@ setTimeout(function() {
 }, 1000);
 }
 
-function sweetat(text){
+function spliStringAndReturn(text){
 	var arrString = text.match(/[A-Z][a-z]+/g);
-	console.log(arrString);
 	var txt = arrString[0];
 	if(arrString[1] !==undefined) txt = txt + " " + arrString[1];
+	return txt;
+}
+
+function sweetat(text){
+	var txt = spliStringAndReturn(text);
 	//TODO send message to controller to get values for each search
 
 

@@ -102,14 +102,15 @@ body {
     }
 }
 
-#frame .content .messages::-webkit-scrollbar {
+
+/* #frame .content .messages::-webkit-scrollbar {
     width: 8px;
     background: transparent;
 }
 
 #frame .content .messages::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.3);
-}
+} */
 
 #frame .content .messages ul li {
     display: inline-block;
