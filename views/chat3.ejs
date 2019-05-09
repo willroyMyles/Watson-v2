@@ -12,6 +12,7 @@
 <link rel='stylesheet' href='https://www.google.com/fonts#UsePlace:use/Collection:Roboto+Slab:400,700,300,100'>
 
       <link rel="stylesheet" href="css/stylealt.css">
+      <link rel="stylesheet" href="css/wave.css">
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
 	 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
 
@@ -22,6 +23,9 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 	 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js">	 </script>
+
+	 <link rel="stylesheet" type="text/css" href="css/loading-bar.css"/> 
+	 <script type="text/javascript" src="js/vivus.js"></script>
 </head>
 
 <body>
@@ -139,7 +143,7 @@ function newMessage() {
 	if($.trim(message) == '') {
 		return false;
 	}
-	$('<li class="sent"><img src="@routes.Assets.versioned("images/male.png")" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
+	$('<li class="sent"><img src="" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
 	$('.message-input input').val(null);
 	//$('.contact.active .preview').html('<span>You: </span>' + message);
 //  $(".messages").animate({ scrollTop: $(document).height() }, 100);
@@ -186,6 +190,21 @@ function bubbleSort(nameArr, valueArr){
 	return {nameArr, valueArr};
 }
 
+function getHtml(){
+	var cnt=document.getElementById("count"); 
+var water=document.getElementById("water");
+var percent=cnt.innerText;
+var interval;
+interval=setInterval(function(){ 
+  percent++; 
+  cnt.innerHTML = percent; 
+  water.style.transform='translate(0'+','+(100-percent)+'%)';
+  if(percent==100){
+    clearInterval(interval);
+  }
+},60);
+}
+
 function writeResults(element){
 	var nameArr = [];
   var valueArr = [];
@@ -218,14 +237,31 @@ function writeResults(element){
 								Swal.showLoading();
 						},
 						onClose: ()=>{
-							createChart(nameArr, element.values, data);
-							$('<li class="replies"><img src="/images/watson.png" alt="" /><p>According to your results, your line of best fit indicates the following</p></br></li>').appendTo($('.messages ul'));
-							var index =0;
-							valueArr.forEach( num =>{
-								var txt = spliStringAndReturn(nameArr[index]);
-								$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ txt+"'"+')" href="#" class="button">'+ txt +'</button>  with compatability of '+ (100-num)+'%</p></br></li>').appendTo($('.messages ul'));
-								index++;
+							var htmlString = '<div class = "svg-holder"></div>';
+								Swal.fire({
+								title: "Your Results",
+								html : htmlString,
+								confirmButtonText: 'Ok',
+								onOpen:()=>{
+									$('<h3> you are</h3>').appendTo($('.svg-holder'));
+									$('<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" style="display: none;">  <symbol id="wave"> <path d="M420,20c21.5-0.4,38.8-2.5,51.1-4.5c13.4-2.2,26.5-5.2,27.3-5.4C514,6.5,518,4.7,528.5,2.7c7.1-1.3,17.9-2.8,31.5-2.7c0,0,0,0,0,0v20H420z"></path>   <path d="M420,20c-21.5-0.4-38.8-2.5-51.1-4.5c-13.4-2.2-26.5-5.2-27.3-5.4C326,6.5,322,4.7,311.5,2.7C304.3,1.4,293.6-0.1,280,0c0,0,0,0,0,0v20H420z"></path>    <path d="M140,20c21.5-0.4,38.8-2.5,51.1-4.5c13.4-2.2,26.5-5.2,27.3-5.4C234,6.5,238,4.7,248.5,2.7c7.1-1.3,17.9-2.8,31.5-2.7c0,0,0,0,0,0v20H140z"></path>    <path d="M140,20c-21.5-0.4-38.8-2.5-51.1-4.5c-13.4-2.2-26.5-5.2-27.3-5.4C46,6.5,42,4.7,31.5,2.7C24.3,1.4,13.6-0.1,0,0c0,0,0,0,0,0l0,20H140z"></path>  </symbol></svg><div class="box">  <div class="percent">    <div class="percentNum" id="count">0</div>    <div class="percentB">%</div>  </div>  <div id="water" class="water">    <svg viewBox="0 0 560 20" class="water_wave water_wave_back">  <use xlink:href="#wave"></use> </svg>  <svg viewBox="0 0 560 20" class="water_wave water_wave_front">      <use xlink:href="#wave"></use>   </svg> </div></div>').appendTo($('.svg-holder'));
+									$('<h3>compatible with yor major here</h3>').appendTo($('.svg-holder'));
+										getHtml();
+								},
+								onClose: ()=>{
+									createChart(nameArr, element.values, data);
+									$('<li class="replies"><img src="/images/watson.png" alt="" /><p>According to your results, your line of best fit indicates the following</p></br></li>').appendTo($('.messages ul'));
+									var index =0;
+									valueArr.forEach( num =>{
+									var txt = spliStringAndReturn(nameArr[index]);
+									$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ txt+"'"+')" href="#" class="button">'+ txt +'</button>  with compatability of '+ (100-num)+'%</p></br></li>').appendTo($('.messages ul'));
+									index++;
 							});
+								},
+
+							});							
+							// javascript goies here
+
 						},
 					});
 					//do something with the data via front-end framework
