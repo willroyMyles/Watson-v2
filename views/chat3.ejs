@@ -210,16 +210,27 @@ function writeResults(element){
         url: '/chart',
         data: item,
         success: function(data){
+
+					Swal.fire({
+						title: "Evaluating Results...",
+						timer: 3500,
+						onBeforeOpen:()=>{
+								Swal.showLoading();
+						},
+						onClose: ()=>{
+							createChart(nameArr, element.values, data);
+							$('<li class="replies"><img src="/images/watson.png" alt="" /><p>According to your results, your line of best fit indicates the following</p></br></li>').appendTo($('.messages ul'));
+							var index =0;
+							valueArr.forEach( num =>{
+								var txt = spliStringAndReturn(nameArr[index]);
+								$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ txt+"'"+')" href="#" class="button">'+ txt +'</button>  with compatability of '+ (100-num)+'%</p></br></li>').appendTo($('.messages ul'));
+								index++;
+							});
+						},
+					});
 					//do something with the data via front-end framework
-					createChart(nameArr, element.values, data);
-						$('<li class="replies"><img src="/images/watson.png" alt="" /><p>According to your results, your line of best fit indicates the following</p></br></li>').appendTo($('.messages ul'));
-	var index =0;
-	valueArr.forEach( num =>{
-		var txt = spliStringAndReturn(nameArr[index]);
-		$('<li class="replies"><img src="/images/watson.png" alt="" /><p><button onclick="sweetat('+"'"+ txt+"'"+')" href="#" class="button">'+ txt +'</button>  with compatability of '+ (100-num)+'%</p></br></li>').appendTo($('.messages ul'));
-		index++;
-	});
-					}
+					
+				}
 		}); 
 
 scroll();
@@ -232,7 +243,7 @@ function createChart(nameArr, valueArr, data1){
 			$('<li class="replies"><img src="/images/watson.png" alt="" /><canvas id="myChart" width="'+width+'" height="'+height+'"></canvas></li>').appendTo($('.messages ul'));
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
-		type: 'line',
+		type: 'radar',
     data: {
 					labels: ['job opportunities','potential income', 'passion', 'logical reasoning', 'math aptitude','english aptitude','programming aptitude','networks aptitude',
         						'concrete thinker','conceptual thinker', 'organizational skills','analytical skills'],
