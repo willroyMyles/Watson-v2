@@ -31,6 +31,8 @@ class Specializations {
     getInfo(specialization, callabck) {
         var request = require('request');
         var cheerio = require('cheerio');
+        console.log(specialization);
+        if (specialization == "Enterprise Systems") specialization = "software Development";
         const options = {
             method: 'GET',
             url: 'https://www.payscale.com/college-salary-report/majors-that-pay-you-back/bachelors?orderBy=MajorName&search=' + specialization + '',
@@ -49,7 +51,7 @@ class Specializations {
                 counter++;
                 if (counter >= 7) counter = 0;
             });
-
+            console.log(specialization);
             callabck(array);
         });
     }

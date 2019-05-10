@@ -57,6 +57,7 @@ class Contextmanager {
             //didnt find object
             if (obj1 === "passion_subject") return;
             console.log(obj1);
+            console.log(obj2);
             this.contexts.push(obj1);
             this.values.push(obj2);
         }
